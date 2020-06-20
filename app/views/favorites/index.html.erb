@@ -1,0 +1,21 @@
+<div class="container">
+  <h1 class='display-4 my-4'>Listas Favoritas</h1>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Usuário</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @favorites.each do |favorite|  %>
+          <tr>
+              <td><%= link_to favorite.name, task_list_path(favorite) %></td>
+              <td>
+                <%= favorite.user.name %>
+              </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
