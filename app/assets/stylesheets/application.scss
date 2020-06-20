@@ -15,3 +15,12 @@
  */
 
  @import "bootstrap";
+
+ .item-nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.item-nav a:hover{
+  color: rgb(155, 155, 155);
+}

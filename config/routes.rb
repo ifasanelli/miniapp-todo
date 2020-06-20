@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :favorites
+  resources :tasks
+  resources :task_lists
+  root to: 'task_list#index'
 end
