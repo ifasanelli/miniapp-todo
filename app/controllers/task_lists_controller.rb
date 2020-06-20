@@ -4,7 +4,12 @@ class TaskListsController < ApplicationController
   end
 
   def show
-    @task_list = TaskList.find(params[:id])
+    if !check_user?
+      flash[:alert] = 'Você não tem acesso a esta lista!'
+      redirect_to root_path
+    else
+      return @task_list
+    end
   end
 
   def set_public
@@ -19,5 +24,12 @@ class TaskListsController < ApplicationController
     @task_list.update_attributes(status: :personal)
     flash[:alert] = "'#{@task_list.name}' agora é privada"
     redirect_to task_list_path(@task_list)
+  end
+
+  private
+
+  def check_user?
+    @task_list = TaskList.find(params[:id])
+    (@task_list.user == current_user || @task_list.shared?) ? true : false
   end
 end
