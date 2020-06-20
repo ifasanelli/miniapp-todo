@@ -1,0 +1,30 @@
+<div class="container">
+  <h1 class='display-4 my-4'><%= @task_list.name %></h1>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Tarefas</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @task_list.tasks.each do |task| %>
+        <tr>
+          <td>
+            <% if task.open? %>
+              <%= task.description %>
+            <% else %>
+              <del><%= task.description %></del>
+            <% end %>
+          </td>
+          <td>
+            Botão
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="col-sm-5 mt-5">
+    <%= link_to 'Voltar', task_lists_path, class:"btn btn-outline-dark" %>
+  </div>
+</div>

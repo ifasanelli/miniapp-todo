@@ -1,7 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+user1 = User.create!(email: "italo@italo.com", password:'123456', name: "Italo Fasanelli")
+user2 = User.create!(email: "mari@mari.com", password:'123456', name: "Mariana Santana")
+
+list1 = TaskList.create!(user_id: user1.id, name: 'Tarefas de 20/06', status: 0)
+list2 = TaskList.create!(user_id: user1.id, name: 'Tarefas de 22/06', status: 5)
+
+list3 = TaskList.create!(user_id: user2.id, name: 'Livros para ler', status: 0)
+list4 = TaskList.create!(user_id: user2.id, name: 'Email para clientes', status: 5)
+
+task1 = Task.create!(description: 'Usuário pode fazer Sign-up e Sign-in', status: 5, task_list_id: list1.id)
+task2 = Task.create!(description: 'Após logado, o usuário pode criar uma Lista de Tarefas', status: 0, task_list_id: list1.id)
+task3 = Task.create!(description: 'No momento da criação de uma Lista já podemos criar várias Tarefas', status: 0, task_list_id: list2.id)
+task4 = Task.create!(description: 'Cada lista pode ser "Pública" ou "Privada"', status: 0, task_list_id: list2.id)
+
+task5 = Task.create!(description: 'The RSpec Book', status: 5, task_list_id: list3.id)
+task6 = Task.create!(description: 'Design Patterns in Ruby', status: 0, task_list_id: list3.id)
+task7 = Task.create!(description: 'steve.jobs@apple.com', status: 5, task_list_id: list4.id)
+task8 = Task.create!(description: 'mark.zuckerberg@facebook.com', status: 0, task_list_id: list4.id)
+
+favorite1 = Favorite.create!(user_id: user1.id, task_list_id: list4.id)
+favorite2 = Favorite.create!(user_id: user2.id, task_list_id: list2.id)

@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class='display-4 my-4'>Minhas Listas</h1>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Visibilidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @task_lists.each do |task_list|  %>
+          <tr>
+              <td><%= link_to task_list.name, task_list_path(task_list) %></td>
+              <td>
+                <% if task_list.personal? %>
+                  <span class='text-danger'>Privada</span>
+                <% elsif task_list.shared? %>
+                  <span class='text-info'>Pública</span>
+                <% end %>
+              </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
