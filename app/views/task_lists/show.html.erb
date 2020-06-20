@@ -1,5 +1,28 @@
 <div class="container">
-  <h1 class='display-4 my-4'><%= @task_list.name %></h1>
+  <div class="row row-cols-2">
+    <div class="col-8">
+      <h1 class='display-4 my-4'><%= @task_list.name %></h1>
+    </div>
+
+    <div class="col-4 pt-5">
+      <% if @task_list.shared? %>
+        <%= form_tag task_list_set_private_path(@task_list.id), method: :put do %>
+          <%= hidden_field_tag :status, :personal %>
+          <%= button_tag(type: "submit", class: "btn btn-warning") do %>
+            tornar privada
+          <% end %>
+        <% end %>
+      <% elsif @task_list.personal? %>
+        <%= form_tag task_list_set_public_path(@task_list.id), method: :put do %>
+          <%= hidden_field_tag :status, :shared %>
+          <%= button_tag(type: "submit", class: "btn btn-danger") do %>
+            tornar pública
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
   <table class="table">
     <thead class="thead-dark">
       <tr>
