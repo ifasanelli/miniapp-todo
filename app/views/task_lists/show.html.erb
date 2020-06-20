@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-4 pt-5">
-      <% if @task_list.shared? %>
+      <% if @task_list.shared? && @task_list.user == current_user %>
         <%= form_tag task_list_set_private_path(@task_list.id), method: :put do %>
           <%= hidden_field_tag :status, :personal %>
           <%= button_tag(type: "submit", class: "btn btn-warning") do %>
@@ -41,13 +41,15 @@
             <% end %>
           </td>
           <td>
-            Botão
+            <% if @task_list.user == current_user %>
+              Botão
+            <% end %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
   <div class="col-sm-5 mt-5">
-    <%= link_to 'Voltar', task_lists_path, class:"btn btn-outline-dark" %>
+    <%= link_to 'Voltar', url_for(:back), class:"btn btn-outline-dark" %>
   </div>
 </div>

@@ -12,6 +12,10 @@ class TaskListsController < ApplicationController
     end
   end
 
+  def discovery
+    @task_lists = TaskList.where(status: 5)
+  end
+
   def set_public
     @task_list = TaskList.find(params[:task_list_id])
     @task_list.update_attributes(status: :shared)

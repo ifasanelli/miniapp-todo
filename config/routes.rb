@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     put :set_public
     put :set_private
   end
+  get '/discovery', to: 'task_lists#discovery'
   root to: 'task_lists#index'
 end

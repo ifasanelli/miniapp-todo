@@ -1,0 +1,19 @@
+<div class="container">
+  <h1 class='display-4 my-4'>Descobrir Listas</h1>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Usuário</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @task_lists.each do |task_list|  %>
+          <tr>
+              <td><%= link_to task_list.name, task_list_path(task_list) %></td>
+              <td><%= task_list.user.name %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
