@@ -7,10 +7,10 @@ feature "User changes task list status" do
     login_as(user, scope: :user)
 
     visit task_list_path(task_list)
-    click_on 'tornar pública'
+    click_on 'Tornar pública'
 
-    expect(page).to have_content('tornar privada')
-    expect(page).to_not have_content('tornar pública')
+    expect(page).to have_content('Tornar privada')
+    expect(page).to_not have_content('Tornar pública')
   end
 
   scenario 'change status from public to private' do
@@ -19,9 +19,9 @@ feature "User changes task list status" do
     login_as(user, scope: :user)
 
     visit task_list_path(task_list)
-    click_on 'tornar privada'
+    click_on 'Tornar privada'
 
-    expect(page).to have_content('tornar pública')
-    expect(page).to_not have_content('tornar privada')
+    expect(page).to have_content('Tornar pública')
+    expect(page).to_not have_content('Tornar privada')
   end
 end

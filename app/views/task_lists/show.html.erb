@@ -9,14 +9,14 @@
         <%= form_tag task_list_set_private_path(@task_list.id), method: :put do %>
           <%= hidden_field_tag :status, :personal %>
           <%= button_tag(type: "submit", class: "btn btn-warning") do %>
-            tornar privada
+            Tornar privada
           <% end %>
         <% end %>
       <% elsif @task_list.personal? %>
         <%= form_tag task_list_set_public_path(@task_list.id), method: :put do %>
           <%= hidden_field_tag :status, :shared %>
           <%= button_tag(type: "submit", class: "btn btn-danger") do %>
-            tornar pública
+            Tornar pública
           <% end %>
         <% end %>
       <% end %>
@@ -41,8 +41,20 @@
             <% end %>
           </td>
           <td>
-            <% if @task_list.user == current_user %>
-              Botão
+            <% if task.open? && @task_list.user == current_user %>
+              <%= form_tag task_set_done_path(task.id), method: :put do %>
+                <%= hidden_field_tag :status, :closed %>
+                <%= button_tag(type: "submit", class: "btn btn-success", id: "set-done-#{task.id}") do %>
+                  Feito
+                <% end %>
+              <% end %>
+            <% elsif task.closed? && @task_list.user == current_user %>
+              <%= form_tag task_set_undone_path(task.id), method: :put do %>
+                <%= hidden_field_tag :status, :open %>
+                <%= button_tag(type: "submit", class: "btn btn-warning", id: "set-undone-#{task.id}") do %>
+                  Desfazer
+                <% end %>
+              <% end %>
             <% end %>
           </td>
         </tr>
