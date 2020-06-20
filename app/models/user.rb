@@ -4,5 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :task_lists
+  has_many :favorites
+
   validates :name, presence: { message: 'Nome não pode ficar em branco' }
 end
