@@ -33,3 +33,9 @@ table a {
 table a:hover{
   color: #292b2c;
 }
+
+.alert{
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+ }
