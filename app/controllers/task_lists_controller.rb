@@ -14,6 +14,39 @@ class TaskListsController < ApplicationController
     end
   end
 
+  def new
+    @task_list = TaskList.new
+  end
+
+  def create
+    @task_list = TaskList.new(task_list_params)
+    @task_list.user = current_user
+    if @task_list.save
+      flash[:notice] = 'Lista criada!'
+      redirect_to @task_list
+    else
+      render :new
+    end
+  end
+
+  def edit
+    if !check_user?
+      flash[:alert] = 'Você não tem acesso a esta lista!'
+      redirect_to root_path
+    else
+      return @task_list
+    end
+  end
+
+  def update
+    @task_list = TaskList.find(params[:id])
+    if @task_list.update(task_list_params)
+			redirect_to @task_list
+		else
+			render :edit
+		end
+  end
+
   def discovery
     @task_lists = TaskList.where(status: 5)
   end
@@ -44,5 +77,9 @@ class TaskListsController < ApplicationController
     @favorites_ids = []
     @favorites.each { |item| @favorites_ids << item.id }
     return @favorites_ids
+  end
+
+  def task_list_params
+    params.require(:task_list).permit(:name, :status)
   end
 end

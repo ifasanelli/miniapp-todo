@@ -1,0 +1,32 @@
+<div class="container">
+  <h1 class="display-4 my-5"><%= @task_list.name %></h1>
+
+  <%= form_for @task_list do |f| %>
+    <div class="form-group row form-check">
+      <%= f.label(:status, "Privada") %>
+      <%= f.radio_button(:status, :personal, checked: true, class:'mr-3') %>
+      <%= f.label(:status, "Pública") %>
+      <%= f.radio_button(:status, :shared) %>
+    </div>
+    <div class="form-group row">
+      <%= f.label :name, 'Nome:', class:"col-sm-1" %>
+      <%= f.text_field :name, class:"form-control col-sm-10" %>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-5">
+          <%= f.submit 'Salvar', class: "btn btn-dark" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-sm-10">
+      <% if @task_list.errors.any?%>
+          <p>Você deve corrigir os erros para continuar:</p>
+          <% @task_list.errors.full_messages.each do |message|  %>
+              <p><%= message %></p>
+          <% end %>
+      <% end %>
+  </div>
+
+  <%= link_to 'Voltar', task_list_path(@task_list), class:"btn btn-outline-dark" %>
+</div>

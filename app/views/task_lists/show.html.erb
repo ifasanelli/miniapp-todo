@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row row-cols-2">
+  <div class="row row-cols-3 my-4">
     <div class="col-8">
-      <h1 class='display-4 my-5'><%= @task_list.name %></h1>
+      <h1 class='display-4'><%= @task_list.name %></h1>
     </div>
 
-    <div class="col-2 pt-5">
+    <div class="col-2">
       <% if @task_list.shared? && @task_list.user != current_user %>
         <% unless @favorites_ids.include?(@task_list.id) %>
           <%= form_with(url: '/favorites', method: :create) do %>
@@ -20,7 +20,7 @@
       <% end %>
     </div>
 
-    <div class="col-2 pt-5">
+    <div class="col-2 mt-3">
       <% if @task_list.shared? && @task_list.user == current_user %>
         <%= form_with(url: task_list_set_private_path(@task_list.id), method: :put) do %>
           <%= hidden_field_tag :status, :personal %>
@@ -32,6 +32,14 @@
           <%= submit_tag("Tornar pública", class: "btn btn-danger") %>
         <% end %>
       <% end %>
+    </div>
+  </div>
+
+  <div class="row row-cols-2 mb-4">
+    <div class="col-10">
+    </div>
+    <div class="col-2">
+      <%= link_to 'Nova Tarefa', edit_task_list_path(@task_list), class:"btn btn-success" %>
     </div>
   </div>
 
