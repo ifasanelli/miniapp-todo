@@ -9,8 +9,7 @@ feature "User changes task list status" do
     visit task_list_path(task_list)
     click_on 'Tornar pública'
 
-    expect(page).to have_content('Tornar privada')
-    expect(page).to_not have_content('Tornar pública')
+    expect(page).to have_content("'#{task_list.name}' agora é pública")
   end
 
   scenario 'change status from public to private' do
@@ -21,7 +20,6 @@ feature "User changes task list status" do
     visit task_list_path(task_list)
     click_on 'Tornar privada'
 
-    expect(page).to have_content('Tornar pública')
-    expect(page).to_not have_content('Tornar privada')
+    expect(page).to have_content("'#{task_list.name}' agora é privada")
   end
 end

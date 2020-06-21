@@ -11,8 +11,7 @@ feature "User changes task status" do
     visit task_list_path(task_list)
     find("#set-done-#{task.id}").click
 
-    expect(page).to have_content('Desfazer')
-    expect(page).to_not have_content('Feito')
+    expect(page).to have_content("'#{task.description}' marcada como feita")
   end
 
   scenario 'change status from closed to open' do
@@ -25,7 +24,6 @@ feature "User changes task status" do
     visit task_list_path(task_list)
     find("#set-undone-#{task.id}").click
 
-    expect(page).to have_content('Feito')
-    expect(page).to_not have_content('Desfazer')
+    expect(page).to have_content("'#{task.description}' desmarcada como feita")
   end
 end

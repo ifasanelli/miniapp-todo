@@ -4,20 +4,32 @@
       <h1 class='display-4 my-4'><%= @task_list.name %></h1>
     </div>
 
-    <div class="col-4 pt-5">
-      <% if @task_list.shared? && @task_list.user == current_user %>
-        <%= form_tag task_list_set_private_path(@task_list.id), method: :put do %>
-          <%= hidden_field_tag :status, :personal %>
-          <%= button_tag(type: "submit", class: "btn btn-warning") do %>
-            Tornar privada
+    <div class="col-2 pt-5">
+      <% if @task_list.shared? && @task_list.user != current_user %>
+        <% unless @favorites_ids.include?(@task_list.id) %>
+          <%= form_with(url: '/favorites', method: :create) do %>
+            <%= hidden_field_tag :task_list_id, @task_list.id %>
+            <%= submit_tag("Favoritar", class: "btn btn-warning") %>
+          <% end %>
+        <% else %>
+          <%= form_with(url: favorite_path, method: :delete) do %>
+            <%= hidden_field_tag :task_list_id, @task_list.id %>
+            <%= submit_tag("Desfavoritar", class: "btn btn-danger") %>
           <% end %>
         <% end %>
+      <% end %>
+    </div>
+
+    <div class="col-2 pt-5">
+      <% if @task_list.shared? && @task_list.user == current_user %>
+        <%= form_with(url: task_list_set_private_path(@task_list.id), method: :put) do %>
+          <%= hidden_field_tag :status, :personal %>
+          <%= submit_tag("Tornar privada", class: "btn btn-warning") %>
+        <% end %>
       <% elsif @task_list.personal? %>
-        <%= form_tag task_list_set_public_path(@task_list.id), method: :put do %>
+        <%= form_with(url: task_list_set_public_path(@task_list.id), method: :put) do %>
           <%= hidden_field_tag :status, :shared %>
-          <%= button_tag(type: "submit", class: "btn btn-danger") do %>
-            Tornar pública
-          <% end %>
+          <%= submit_tag("Tornar pública", class: "btn btn-danger") %>
         <% end %>
       <% end %>
     </div>
@@ -42,18 +54,14 @@
           </td>
           <td>
             <% if task.open? && @task_list.user == current_user %>
-              <%= form_tag task_set_done_path(task.id), method: :put do %>
+              <%= form_with(url: task_set_done_path(task.id), method: :put) do %>
                 <%= hidden_field_tag :status, :closed %>
-                <%= button_tag(type: "submit", class: "btn btn-success", id: "set-done-#{task.id}") do %>
-                  Feito
-                <% end %>
+                <%= submit_tag("Feito", class: "btn btn-success", id: "set-done-#{task.id}") %>
               <% end %>
             <% elsif task.closed? && @task_list.user == current_user %>
-              <%= form_tag task_set_undone_path(task.id), method: :put do %>
+              <%= form_with(url: task_set_undone_path(task.id), method: :put) do %>
                 <%= hidden_field_tag :status, :open %>
-                <%= button_tag(type: "submit", class: "btn btn-warning", id: "set-undone-#{task.id}") do %>
-                  Desfazer
-                <% end %>
+                <%= submit_tag("Desfazer", class: "btn btn-warning", id: "set-undone-#{task.id}") %>
               <% end %>
             <% end %>
           </td>

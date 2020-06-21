@@ -5,6 +5,7 @@
       <tr>
         <th scope="col">Nome</th>
         <th scope="col">Usuário</th>
+        <th scope="col">Favorida</th>
       </tr>
     </thead>
     <tbody>
@@ -12,6 +13,13 @@
           <tr>
               <td><%= link_to task_list.name, task_list_path(task_list) %></td>
               <td><%= task_list.user.name %></td>
+              <td>
+                <% if @favorites_ids.include?(task_list.id) %>
+                  <span class='text-primary'>Sim</span>
+                <% else %>
+                  <span class='text-dark'>Não</span>
+                <% end %>
+              </td>
           </tr>
       <% end %>
     </tbody>

@@ -1,4 +1,6 @@
 class TaskListsController < ApplicationController
+  before_action :find_favorites, only: %i[show discovery]
+
   def index
     @task_lists = current_user.task_lists
   end
@@ -8,7 +10,7 @@ class TaskListsController < ApplicationController
       flash[:alert] = 'Você não tem acesso a esta lista!'
       redirect_to root_path
     else
-      return @task_list
+      return @task_list, @favorites_ids
     end
   end
 
@@ -35,5 +37,12 @@ class TaskListsController < ApplicationController
   def check_user?
     @task_list = TaskList.find(params[:id])
     (@task_list.user == current_user || @task_list.shared?) ? true : false
+  end
+
+  def find_favorites
+    @favorites = current_user.favorites.map(&:task_list)
+    @favorites_ids = []
+    @favorites.each { |item| @favorites_ids << item.id }
+    return @favorites_ids
   end
 end
