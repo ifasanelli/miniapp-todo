@@ -50,6 +50,7 @@ class TaskListsController < ApplicationController
 
   def discovery
     @task_lists = TaskList.where(status: 5)
+                          .where.not(user_id: current_user.id)
                           .order(created_at: :desc)
   end
 
