@@ -2,7 +2,7 @@ class TaskListsController < ApplicationController
   before_action :find_favorites, only: %i[show discovery]
 
   def index
-    @task_lists = current_user.task_lists
+    @task_lists = current_user.task_lists.order(created_at: :desc)
   end
 
   def show
@@ -16,6 +16,7 @@ class TaskListsController < ApplicationController
 
   def new
     @task_list = TaskList.new
+    @task_list.tasks.build
   end
 
   def create
@@ -49,6 +50,7 @@ class TaskListsController < ApplicationController
 
   def discovery
     @task_lists = TaskList.where(status: 5)
+                          .order(created_at: :desc)
   end
 
   def set_public
@@ -80,6 +82,6 @@ class TaskListsController < ApplicationController
   end
 
   def task_list_params
-    params.require(:task_list).permit(:name, :status)
+    params.require(:task_list).permit(:name, :status, tasks_attributes: [:id, :description])
   end
 end
