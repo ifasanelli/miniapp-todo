@@ -12,12 +12,12 @@
       <%= form.label :name, 'Nome:', class:"col-sm-2" %>
       <%= form.text_field :name, class:"form-control col-sm-10" %>
     </div>
-    <div class="form-group row">
-      <%= form.fields_for :tasks do |f| %>
-        <%= render 'task_fields', f: f %>
-      <% end %>
-      <%= link_to_add_fields('Nova tarefa', form, :tasks) %>
-    </div>
+
+    <%= form.fields_for :tasks do |f| %>
+      <%= render 'task_fields', f: f %>
+    <% end %>
+    <%= link_to_add_fields('Nova tarefa', form, :tasks, class: "btn btn-success") %>
+
     <div class="form-group row">
       <div class="col-sm-5">
           <%= form.submit 'Salvar', class: "btn btn-dark" %>
@@ -36,13 +36,3 @@
 
   <%= link_to 'Voltar', task_list_path(@task_list), class:"btn btn-outline-dark" %>
 </div>
-
-<script>
-  $('form').on('click', '.add_fields', function(even){
-    var regexp, time;
-    time = new Date().getTime();
-    regexp = new RegExp($(this).data('id'), 'g');
-    $(this).before($(this).data('fields').replace(regexp, time));
-    return event.preventDefault();
-  });
-</script>

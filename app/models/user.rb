@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :task_lists
-  has_many :favorites
+  has_many :task_lists, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   validates :name, presence: { message: 'Nome não pode ficar em branco' }
 end

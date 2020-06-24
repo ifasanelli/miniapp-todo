@@ -40,7 +40,7 @@
       <div class="col-10">
       </div>
       <div class="col-2">
-        <%= link_to 'Nova Tarefa', edit_task_list_path(@task_list), class:"btn btn-success" %>
+        <%= link_to 'Nova Tarefa', edit_task_list_path(@task_list), class:"btn btn-info" %>
       </div>
     <% end %>
   </div>
@@ -64,12 +64,12 @@
           </td>
           <td>
             <% if task.open? && @task_list.user == current_user %>
-              <%= form_with(url: task_set_done_path(task.id), method: :put) do %>
+              <%= form_with(url: task_list_task_set_done_path(@task_list.id,task.id), method: :put) do %>
                 <%= hidden_field_tag :status, :closed %>
                 <%= submit_tag("Feito", class: "btn btn-success", id: "set-done-#{task.id}") %>
               <% end %>
             <% elsif task.closed? && @task_list.user == current_user %>
-              <%= form_with(url: task_set_undone_path(task.id), method: :put) do %>
+              <%= form_with(url: task_list_task_set_undone_path(@task_list.id,task.id), method: :put) do %>
                 <%= hidden_field_tag :status, :open %>
                 <%= submit_tag("Desfazer", class: "btn btn-warning", id: "set-undone-#{task.id}") %>
               <% end %>

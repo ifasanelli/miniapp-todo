@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def link_to_add_fields(name, f, association)
+  def link_to_add_fields(name, f, association, **args)
     #cria um novo objeto da associação (:tasks)
     new_object = f.object.send(association).klass.new
 
@@ -12,6 +12,6 @@ module ApplicationHelper
     end
 
     #passa o link para o formulário
-    link_to(name, '#', class: 'add_fields', data:{id: id, fields: fields.gsub("\n","")})
+    link_to(name, '#', class: 'add_fields ' + args[:class], data:{id: id, fields: fields.gsub("\n","")})
   end
 end

@@ -10,6 +10,32 @@ require("channels")
 require("jquery")
 
 
+$(document).on('turbolinks:load', function() {
+
+  $('form').on('click', '.add_fields', function(event){
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $(this).before($(this).data('fields').replace(regexp, time));
+    return event.preventDefault();
+  });
+
+  $('form').on('click', '.delete-input', function(event) {
+    if (window.location.href != "http://localhost:3000/task_lists/new"){
+      if (confirm("Are you sure you want do delete this task?")){
+        $(this).prev('input[class=remove]').val('1');
+        $(this).closest('.task-input').hide();
+        return event.preventDefault();
+      };
+    } else {
+      $(this).prev('input[class=remove]').val('1');
+      $(this).closest('.task-input').hide();
+      return event.preventDefault();
+    };
+  });
+})
+
+
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
