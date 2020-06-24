@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :task_lists do
     put :set_public
     put :set_private
+    put :create_task
     resources :tasks do
       put :set_done
       put :set_undone

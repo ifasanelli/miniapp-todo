@@ -48,6 +48,12 @@ class TaskListsController < ApplicationController
 		end
   end
 
+  def create_task
+    @task_list = TaskList.find(params[:task_list_id])
+    @task_list.update(task_list_params)
+    redirect_to @task_list
+  end
+
   def discovery
     @task_lists = TaskList.where(status: 5)
                           .where.not(user_id: current_user.id)

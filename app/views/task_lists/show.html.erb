@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row row-cols-3 my-4">
-    <div class="col-8">
+  <div class="row row-cols-4 my-4">
+    <div class="col-6">
       <h1 class='display-4'><%= @task_list.name %></h1>
     </div>
 
@@ -33,17 +33,27 @@
         <% end %>
       <% end %>
     </div>
+
+    <div class="col-2 mt-3">
+      <% if @task_list.user == current_user %>
+        <%= link_to 'Editar Tarefa', edit_task_list_path(@task_list), class:"btn btn-warning" %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="row row-cols-2 mb-4">
-    <% if @task_list.user == current_user %>
-      <div class="col-10">
-      </div>
-      <div class="col-2">
-        <%= link_to 'Nova Tarefa', edit_task_list_path(@task_list), class:"btn btn-info" %>
+
+  <% if @task_list.user == current_user %>
+    <%= form_with(model: @task_list, url: task_list_create_task_path(@task_list.id), method: :put) do |form| %>
+      <%= form.fields_for :tasks do |f| %>
+      <% end %>
+      <div class="form-group row mt-3">
+        <div class="col-sm-9">
+          <%= link_to_add_fields('+ Nova tarefa', form, :tasks, class: "btn btn-info add-task") %>
+          <%= form.submit 'Salvar', class: "btn btn-success submit-task" %>
+        </div>
       </div>
     <% end %>
-  </div>
+  <% end %>
 
   <table class="table">
     <thead class="thead-dark">
@@ -53,7 +63,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @task_list.tasks.each do |task| %>
+      <% @task_list.tasks.order(created_at: :desc).each do |task| %>
         <tr>
           <td>
             <% if task.open? %>
@@ -79,7 +89,8 @@
       <% end %>
     </tbody>
   </table>
+
   <div class="col-sm-5 mt-5">
-    <%= link_to 'Voltar', url_for(:back), class:"btn btn-outline-dark" %>
+    <%= link_to 'Voltar', task_lists_path, class:"btn btn-outline-dark" %>
   </div>
 </div>

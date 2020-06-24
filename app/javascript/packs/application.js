@@ -11,6 +11,11 @@ require("jquery")
 
 
 $(document).on('turbolinks:load', function() {
+  $('.submit-task').hide();
+
+  $('.add-task').on('click', function(){
+    $('.submit-task').show();
+  })
 
   $('form').on('click', '.add_fields', function(event){
     var regexp, time;
@@ -21,17 +26,9 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('form').on('click', '.delete-input', function(event) {
-    if (window.location.href != "http://localhost:3000/task_lists/new"){
-      if (confirm("Are you sure you want do delete this task?")){
-        $(this).prev('input[class=remove]').val('1');
-        $(this).closest('.task-input').hide();
-        return event.preventDefault();
-      };
-    } else {
-      $(this).prev('input[class=remove]').val('1');
-      $(this).closest('.task-input').hide();
-      return event.preventDefault();
-    };
+    $(this).prev('input[class=remove]').val('1');
+    $(this).closest('.task-input').hide();
+    return event.preventDefault();
   });
 })
 
