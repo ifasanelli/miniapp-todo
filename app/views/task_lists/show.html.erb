@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-2 mt-3">
-      <% if @task_list.shared? && @task_list.user != current_user %>
+      <% if @task_list.shareable? && @task_list.user != current_user %>
         <% unless @favorites_ids.include?(@task_list.id) %>
           <%= form_with(url: '/favorites', method: :create) do %>
             <%= hidden_field_tag :task_list_id, @task_list.id %>
@@ -21,14 +21,14 @@
     </div>
 
     <div class="col-2 mt-3">
-      <% if @task_list.shared? && @task_list.user == current_user %>
+      <% if @task_list.shareable? && @task_list.user == current_user %>
         <%= form_with(url: task_list_set_private_path(@task_list.id), method: :put) do %>
           <%= hidden_field_tag :status, :personal %>
           <%= submit_tag("Tornar privada", class: "btn btn-warning") %>
         <% end %>
       <% elsif @task_list.personal? %>
         <%= form_with(url: task_list_set_public_path(@task_list.id), method: :put) do %>
-          <%= hidden_field_tag :status, :shared %>
+          <%= hidden_field_tag :status, :shareable %>
           <%= submit_tag("Tornar pública", class: "btn btn-danger") %>
         <% end %>
       <% end %>
@@ -36,7 +36,7 @@
 
     <div class="col-2 mt-3">
       <% if @task_list.user == current_user %>
-        <%= link_to 'Editar Tarefa', edit_task_list_path(@task_list), class:"btn btn-warning" %>
+        <%= link_to 'Editar Lista', edit_task_list_path(@task_list), class:"btn btn-warning" %>
       <% end %>
     </div>
   </div>

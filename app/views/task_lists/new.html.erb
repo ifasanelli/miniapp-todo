@@ -6,7 +6,7 @@
       <%= form.label(:status, "Privada") %>
       <%= form.radio_button(:status, :personal, checked: true, class:'mr-3') %>
       <%= form.label(:status, "Pública") %>
-      <%= form.radio_button(:status, :shared) %>
+      <%= form.radio_button(:status, :shareable) %>
     </div>
     <div class="form-group row">
       <%= form.label :name, 'Nome:', class:"col-sm-2" %>

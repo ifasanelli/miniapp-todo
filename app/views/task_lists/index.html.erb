@@ -21,7 +21,7 @@
               <td>
                 <% if task_list.personal? %>
                   <span class='text-danger'>Privada</span>
-                <% elsif task_list.shared? %>
+                <% elsif task_list.shareable? %>
                   <span class='text-info'>Pública</span>
                 <% end %>
               </td>

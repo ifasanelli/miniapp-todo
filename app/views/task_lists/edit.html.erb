@@ -1,25 +1,45 @@
 <div class="container">
-  <h1 class="display-4 my-5"><%= @task_list.name %></h1>
+  <div class="row row-cols-2 my-5">
+    <div class="col-8">
+      <h1 class="display-4"><%= @task_list.name %></h1>
+    </div>
+    <div class="col-4">
+      <%= link_to 'Deletar Lista', task_list_path(@task_list), method: :delete, class: "btn btn-danger", data: { confirm: 'Quer apagar esta lista?' } %>
+    </div>
+  </div>
 
   <%= form_with model: @task_list do |form| %>
     <div class="form-group row form-check">
       <%= form.label(:status, "Privada") %>
       <%= form.radio_button(:status, :personal, checked: true, class:'mr-3') %>
       <%= form.label(:status, "Pública") %>
-      <%= form.radio_button(:status, :shared) %>
+      <%= form.radio_button(:status, :shareable) %>
     </div>
     <div class="form-group row">
       <%= form.label :name, 'Nome:', class:"col-sm-2" %>
       <%= form.text_field :name, class:"form-control col-sm-10" %>
     </div>
 
-    <%= form.fields_for :tasks do |f| %>
-      <%= render 'task_fields', f: f %>
-    <% end %>
+    <table class="table mt-5">
+      <thead class="thead">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Deletar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @task_list.tasks.order(created_at: :desc).each do |task|  %>
+            <tr>
+                <td><%= task.description %></td>
+                <td><%= link_to 'Deletar tarefa', task_list_task_path(@task_list, task), method: :delete, class: "btn btn-outline-danger", data: { confirm: 'Quer apagar esta tarefa?' } %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
 
     <div class="form-group row">
       <div class="col-sm-5">
-          <%= form.submit 'Salvar', class: "btn btn-dark" %>
+          <%= form.submit 'Salvar', class: "btn btn-success" %>
       </div>
     </div>
   <% end %>
@@ -33,5 +53,5 @@
       <% end %>
   </div>
 
-  <%= link_to 'Voltar', task_list_path(@task_list), class:"btn btn-outline-dark" %>
+  <%= link_to 'Voltar', task_list_path(@task_list), class:"btn btn-outline-dark mb-5" %>
 </div>
