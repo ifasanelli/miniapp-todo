@@ -11,6 +11,8 @@ require("jquery")
 
 
 $(document).on('turbolinks:load', function() {
+  $(".alert" ).fadeOut(4000);
+
   $('.submit-task').hide();
 
   $('.add-task').on('click', function(){
